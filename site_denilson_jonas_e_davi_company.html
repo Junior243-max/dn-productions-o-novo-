@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Denilson Jonas e Davi Company — Loja de Jogos</title>
+  <meta name="description" content="Loja oficial da Denilson Jonas e Davi Company — jogos, demos e contato." />
+  <style>
+    :root{
+      --green:#1db954; /* verde principal */
+      --blue:#2b7cff;  /* azul principal */
+      --red:#ff4d4f;   /* vermelho principal */
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --radius:16px;
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#071026);color:#e6eef8;min-height:100vh}
+    .container{max-width:1100px;margin:36px auto;padding:24px}
+    header{display:flex;gap:16px;align-items:center}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo .mark{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--green),var(--blue));display:flex;align-items:center;justify-content:center;font-weight:700;color:#021124}
+    h1{margin:0;font-size:20px}
+    p.lead{margin:4px 0 0;color:var(--muted)}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:24px;margin-top:28px;align-items:center}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));padding:20px;border-radius:var(--radius);box-shadow:0 6px 24px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .cta{display:flex;gap:12px;margin-top:14px}
+    .btn{padding:10px 14px;border-radius:12px;border:0;cursor:pointer;font-weight:700}
+    .btn-paypal{background:var(--blue);color:white}
+    .btn-pix{background:var(--green);color:#021124}
+    .btn-secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    /* Product list */
+    .products{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+    .product{padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));text-align:center}
+    .product img{width:100%;height:150px;object-fit:contain;border-radius:8px;background:linear-gradient(90deg,#071837,#0b0b12)}
+    .price{font-weight:800;margin-top:8px}
+
+    /* Footer */
+    footer{margin-top:28px;padding:18px;border-radius:12px;background:transparent;display:flex;justify-content:space-between;align-items:center}
+
+    /* Responsive */
+    @media(max-width:980px){.hero{grid-template-columns:1fr;}.products{grid-template-columns:repeat(2,1fr)} }
+    @media(max-width:560px){.products{grid-template-columns:1fr}.container{padding:12px}.logo .mark{width:48px;height:48px}}
+
+    /* small UI pieces */
+    .badge{display:inline-block;padding:6px 8px;border-radius:999px;font-weight:700}
+    .muted{color:var(--muted)}
+
+    /* Payment modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(1,4,12,0.6);display:none;align-items:center;justify-content:center;padding:18px}
+    .modal{width:100%;max-width:560px;background:linear-gradient(180deg,#071423,#081427);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .row{display:flex;gap:12px}
+    input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* success badge */
+    .unlocked{display:inline-block;padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,var(--green),var(--blue));color:#021124;font-weight:800}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <div class="mark">DJ</div>
+        <div>
+          <h1>Denilson Jonas e Davi Company</h1>
+          <p class="lead">Loja de jogos independente — demos, versões completas e extras.</p>
+        </div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+        <span class="badge" style="background:linear-gradient(90deg,var(--blue),var(--red));color:white">Lançamentos</span>
+        <button class="btn btn-secondary" onclick="openContact()">Contato</button>
+      </div>
+    </header>
+
+    <main class="hero">
+      <section class="card">
+        <h2 style="margin:0">Jogos em destaque</h2>
+        <p class="muted">Compre com PayPal ou pague por Pix — o link de download será liberado após confirmação.</p>
+
+        <div class="products" id="products">
+          <!-- Produtos - substitua as imagens/infos quando quiser -->
+          <div class="product card">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><rect width='100%' height='100%' fill='%2301111a'/><text x='50%' y='50%' fill='%23ffffff' font-size='24' font-family='Arial' text-anchor='middle'>Super Mini Boy</text></svg>" alt="Super Mini Boy">
+            <div style="margin-top:8px">Super Mini Boy — Demo</div>
+            <div class="price">R$ 6,99</div>
+            <div class="cta" style="justify-content:center;margin-top:10px">
+              <button class="btn btn-paypal" onclick="startPaypal('Super Mini Boy',6.99)">Pagar com PayPal</button>
+              <button class="btn btn-pix" onclick="openPix('Super Mini Boy',6.99)">Pagar por Pix</button>
+            </div>
+          </div>
+
+          <div class="product card">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><rect width='100%' height='100%' fill='%2301111a'/><text x='50%' y='50%' fill='%23ffffff' font-size='24' font-family='Arial' text-anchor='middle'>Desert Mayhem</text></svg>" alt="Desert Mayhem">
+            <div style="margin-top:8px">Desert Mayhem — Versão Beta</div>
+            <div class="price">R$ 12,99</div>
+            <div class="cta" style="justify-content:center;margin-top:10px">
+              <button class="btn btn-paypal" onclick="startPaypal('Desert Mayhem',12.99)">Pagar com PayPal</button>
+              <button class="btn btn-pix" onclick="openPix('Desert Mayhem',12.99)">Pagar por Pix</button>
+            </div>
+          </div>
+
+          <div class="product card">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><rect width='100%' height='100%' fill='%2301111a'/><text x='50%' y='50%' fill='%23ffffff' font-size='24' font-family='Arial' text-anchor='middle'>Pack Retro</text></svg>" alt="Pack Retro">
+            <div style="margin-top:8px">Pack Retro — Skins e MPs</div>
+            <div class="price">R$ 9,99</div>
+            <div class="cta" style="justify-content:center;margin-top:10px">
+              <button class="btn btn-paypal" onclick="startPaypal('Pack Retro',9.99)">Pagar com PayPal</button>
+              <button class="btn btn-pix" onclick="openPix('Pack Retro',9.99)">Pagar por Pix</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px" class="small">Observação: Este site é um front-end estático. Para pagamentos reais você precisará conectar com a API do PayPal (ou o gateway do Nubank/Pix) no servidor. Posso gerar o código de backend se quiser.</div>
+      </section>
+
+      <aside class="card">
+        <h3 style="margin-top:0">Minha conta e entrega</h3>
+        <p class="muted">Ao pagar por PayPal você será redirecionado (link configurável). Se pagar por Pix, envie o comprovante para que possamos liberar o download.</p>
+
+        <div style="margin-top:12px">
+          <strong>Pix (exemplo)</strong>
+          <p class="small">Chave Pix: <code id="pixKey"> 140.189.464-06</code></p>
+          <button class="btn btn-secondary" onclick="copyPix()">Copiar chave Pix</button>
+        </div>
+
+        <div style="margin-top:18px">
+          <h4 style="margin:0">Link de download</h4>
+          <p class="muted">O link aparecerá aqui quando o pagamento for confirmado.</p>
+          <div id="downloadArea" style="margin-top:8px"></div>
+        </div>
+
+        <div style="margin-top:18px">
+          <h4 style="margin:0">Contato</h4>
+          <p class="small">email: contato@denilsondavi.dev</p>
+          <p class="small">WhatsApp: +55 8187187924(exemplo)</p>
+        </div>
+
+      </aside>
+    </main>
+
+    <footer>
+      <div class="small muted">© Denilson Jonas e Davi Company — Todos os direitos reservados</div>
+      <div>
+        <button class="btn btn-secondary" onclick="openTerms()">Termos</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal: Pix / Payment -->
+  <div class="modal-backdrop" id="modal">
+    <div class="modal card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 id="modalTitle">Pagamento</h3>
+        <button class="btn btn-secondary" onclick="closeModal()">Fechar</button>
+      </div>
+
+      <div id="modalBody" style="margin-top:12px">
+        <!-- preenchido dinamicamente -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simulação simples de fluxo de pagamento + liberação de link
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modalBody');
+    const modalTitle = document.getElementById('modalTitle');
+    const downloadArea = document.getElementById('downloadArea');
+
+    function startPaypal(product,price){
+      // Em um site real: aqui você chamaria sua rota no servidor que inicia um checkout PayPal
+      modalTitle.innerText = 'PayPal — ' + product;
+      modalBody.innerHTML = `
+        <p class="small">Você será redirecionado para o PayPal em uma nova aba (simulação).</p>
+        <p class="small">Produto: <strong>${product}</strong><br>Preço: R$ ${price.toFixed(2)}</p>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="btn btn-paypal" onclick="simulatePaypal('${product}',${price})">Abrir PayPal (simular)</button>
+          <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+        </div>
+      `;
+      modal.style.display='flex';
+    }
+
+    function simulatePaypal(product,price){
+      // abre nova aba com uma página temporária (simulação) e libera o link localmente
+      window.open('about:blank','_blank').document.write('<h1>Simulação PayPal — pagamento concluído</h1><p>Feche esta aba e volte ao site para liberar o download.</p>');
+      // simula verificação: libera imediatamente (em produção, webhook + verificação no servidor)
+      unlockDownload(product);
+      closeModal();
+    }
+
+    function openPix(product,price){
+      modalTitle.innerText = 'Pix — ' + product;
+      modalBody.innerHTML = `
+        <p class="small">Pague via Pix usando a chave abaixo ou gere QR no seu app.</p>
+        <p><strong>Chave Pix:</strong> <code id='pixKeyModal'>00000000-0000-0000-0000-000000000000</code></p>
+        <label>Envie o comprovante (PNG/JPG)</label>
+        <input type='file' id='proof' accept='image/*' />
+        <div style='display:flex;gap:8px;margin-top:12px'>
+          <button class='btn btn-pix' onclick="sendProof('${product}',${price})">Enviar comprovante</button>
+          <button class='btn btn-secondary' onclick='closeModal()'>Cancelar</button>
+        </div>
+        <p class='small muted' style='margin-top:8px'>Obs: no modo estático, o envio apenas simula confirmação. Em produção, é preciso um backend para validar automaticamente.</p>
+      `;
+      modal.style.display='flex';
+    }
+
+    function sendProof(product,price){
+      const f = document.getElementById('proof').files[0];
+      if(!f){alert('Escolha um arquivo de comprovante.');return}
+      // Simula upload e liberação
+      const reader = new FileReader();
+      reader.onload = ()=>{
+        // Em produção enviar para servidor
+        unlockDownload(product);
+        alert('Comprovante enviado. Download liberado (simulação).');
+        closeModal();
+      };
+      reader.readAsDataURL(f);
+    }
+
+    function unlockDownload(product){
+      // Gera um link temporário (simulado). Substitua por link real após confirmar pagamento no servidor.
+      const slug = product.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+      const href = `downloads/${slug}.zip`;
+      downloadArea.innerHTML = `<div class='unlocked'>PAGO</div> <div style='margin-top:10px'><a href='${href}' download style='font-weight:700;color:var(--blue)'>Baixar ${product}</a></div>`;
+    }
+
+    function closeModal(){modal.style.display='none';modalBody.innerHTML=''}
+
+    function copyPix(){
+      const key = document.getElementById('pixKey').innerText;
+      navigator.clipboard?.writeText(key).then(()=>alert('Chave copiada!'))
+    }
+
+    function openContact(){
+      modalTitle.innerText='Fale conosco';
+      modalBody.innerHTML = `
+        <label>Nome</label><input id='c_name' />
+        <label>Email</label><input id='c_email' />
+        <label>Mensagem</label><textarea id='c_msg'></textarea>
+        <div style='display:flex;gap:8px;margin-top:12px'>
+          <button class='btn btn-paypal' onclick='sendContact()'>Enviar</button>
+          <button class='btn btn-secondary' onclick='closeModal()'>Fechar</button>
+        </div>
+      `;
+      modal.style.display='flex';
+    }
+    function sendContact(){
+      const n=document.getElementById('c_name').value||'---';
+      const e=document.getElementById('c_email').value||'---';
+      const m=document.getElementById('c_msg').value||'---';
+      // Em produção: POST para /contact
+      alert('Mensagem enviada (simulação)\nNome:'+n+'\nEmail:'+e+'\nMensagem:'+m);
+      closeModal();
+    }
+
+    function openTerms(){
+      modalTitle.innerText='Termos & Regras';
+      modalBody.innerHTML = `<div class='small muted'>Este é um exemplo de Termos. Em produção adicione política de reembolso, privacidade e informações de suporte.</div><div style='margin-top:12px'><button class='btn btn-secondary' onclick='closeModal()'>Fechar</button></div>`;
+      modal.style.display='flex';
+    }
+
+    // Inicialização: definir chave Pix de exemplo (substituir por sua chave real)
+    document.getElementById('pixKey').innerText = 'seu-pix@exemplo.com';
+  </script>
+</body>
+</html>
